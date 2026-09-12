@@ -4,7 +4,7 @@
 
 ## Thông tin cá nhân
 
-- Họ và tên:
+- Họ và tên: 
 - Mã học viên:
 - Nhóm:
 - Candidate problem nhóm chọn:
