@@ -58,7 +58,7 @@ Giữ bài nào: actor cụ thể, workflow vẽ được 3-7 bước, bottlenec
 
 ---
 
-#### Problem Card #1 — [Tên problem]
+#### Problem Card #1 — [Weekly Literature Review & Benchmarking]
 
 ```text
 Problem 1 câu: Mỗi tuần phải mở đọc lướt hàng chục PDF để trích xuất thủ công các chỉ số (Dataset, SOTA Metric, Model Architecture) vào Sheets báo cáo Lab.
@@ -78,7 +78,7 @@ Bottleneck: Đọc lướt & trích xuất bảng chỉ số từ file PDF (180�
 
 Impact: Chiếm dụng phần lớn thời gian làm thực nghiệm/coding của nghiên cứu sinh; dễ bỏ sót thông tin quan trọng hoặc cập nhật trễ các bài báo SOTA mới khiến tiến độ nghiên cứu bị chậm.
 
-Success metric: Giảm thời gian tổng hợp từ ~210 phút/tuần xuống dưới 30 phút/tuần; độ chính xác trích xuất thông số kỹ thuật đạt > 95%.
+Success metric: Giảm thời gian tổng hợp từ ~210 phút/tuần xuống dưới 30 phút/tuần; độ chính xác trích xuất thông số kỹ thuật tăng
 
 Non-AI alternative: Sử dụng RSS Feed kết hợp script Python parse metadata cơ bản (Title, Abstract, Authors) qua API của ArXiv/Semantic Scholar và xuất thẳng ra CSV/Sheets.
 
@@ -97,22 +97,24 @@ Quick gut:
 **Draft workflow Card #1** (ASCII / Mermaid / ảnh đính kèm):
 
 ```text
-CURRENT STATE — ___ phút
+CURRENT STATE — 210 phút
 
-[1 ...: __'] → [2 ...: __'] → [3 ...: __'] → [4 ...: __']  <-- bottleneck
+[1. Search ArXiv/IEEE: 15'] → [2. Tải 10–15 PDF: 15'] → [3. Đọc lướt & trích xuất số liệu: 150'] → [4. Nhập Sheets & làm Slide: 30']  <-- bottleneck
 
-FUTURE STATE — ___ phút
+FUTURE STATE — 25 phút
 
-[1 ...: __'] → [2 ...: __'] → [3 ... review: __']  <-- human boundary
+[1. Agent tự crawl PDF theo keyword: 0'] → [2. LLM trích xuất JSON thông số & điền Sheets: 5'] → [3. Review & duyệt số liệu: 20']  <-- human boundary
 
-Fallback: nếu AI sai thì ...
+Fallback: Nếu AI trích xuất độ tin cậy thấp (Confidence Score < 80%) hoặc gặp bảng biểu quá phức tạp, hệ thống tự động bôi vàng dòng đó trên Sheets kèm link dẫn thẳng đến trang chứa kết quả trong file PDF để người dùng đối chiếu nhanh.
+
+
 ```
 
 File đính kèm (nếu vẽ riêng): `01-individual-problem-scan-workflow-card-1.png`
 
 ---
 
-#### Problem Card #2 — [Tên problem]
+#### Problem Card #2 — [Tự động trích dẫn & chuẩn hóa Citation]
 
 ```text
 Problem 1 câu: Nghiên cứu sinh tốn nhiều thời gian tra cứu metadata, sửa lỗi cú pháp BibTeX và chuẩn hóa thủ công định dạng trích dẫn (IEEE/APA) khi viết bài báo khoa học.
@@ -172,7 +174,7 @@ File đính kèm: `01-individual-problem-scan-workflow-card-2.png`
 
 ---
 
-#### Problem Card #3 — [Tên problem]
+#### Problem Card #3 — [Dataset Curation & Document Indexing]
 
 ```text
 Problem 1 câu:
@@ -237,26 +239,31 @@ File đính kèm: `01-individual-problem-scan-workflow-card-3.png`
 **Card tôi muốn pitch nhất:**
 
 ```text
+tôi muốn pitch Weekly Literature Review & Benchmarking. đây là một trong những vấn đề gây nhức nhối khi làm nghiên cứu khoa học. phải đọc lướt qua rất nhiều report, paper, tìm các paper mới, đã được kiểm chứng từ các nguồn như ResearchGate, Springer...
+
 
 ```
 
 **Vì sao (2-3 câu: workflow gì, số đo gì, impact gì):**
 
 ```text
-
+Workflow tổng hợp báo cáo paper lặp lại cố định mỗi chiều thứ Sáu nhưng ngốn tới 210 phút chỉ vì phải mở từng PDF đọc lướt bảng kết quả thủ công. 
+Giải pháp: cắt giảm hơn 85% th.gian --> 25 phút, loại bỏ hoàn toàn nút thắt trích xuất dữ liệu. 
+Impact, giảm  3-4 tiếng nghiên cứu thực nghiệm mỗi tuần và đảm bảo lab luôn nắm bắt kịp thời các công trình SOTA mới nhất mà không sợ sót bài.
 ```
 
 **Câu hỏi tôi muốn nhóm challenge (1-2 câu hỏi đúng chỗ yếu):**
 
 ```text
-
+1. Làm thế nào để Agent xử lý và trích xuất chính xác số liệu từ các bảng benchmark phức tạp (nhiều hàng cột lồng nhau, định dạng ảnh/scan trong PDF) mà không bị hallucinate (bịa số)?
+2. Chi phí API và độ phức tạp khi xây dựng một pipeline Agent tự động cào và parse hàng chục paper mỗi tuần có thực sự tối ưu hơn so với việc dùng workflow bán tự động (Rule + script API)?
 ```
 
 **AI phản biện Card (nếu có):**
-- Điểm yếu AI chỉ ra:
-- Tôi sửa gì:
+- Điểm yếu AI chỉ ra: Điểm yếu AI chỉ ra: Rủi ro ảo giác (hallucination) của LLM khi đọc các bảng biểu kỹ thuật dày đặc và nguy cơ người dùng tin tưởng hoàn toàn vào dữ liệu trích xuất mà không kiểm chứng.
+- Tôi sửa gì: thêm fallback, confident score <70%> - đây là con số tương đối, tạo deep-link dẫn thẳng tới số trang/bảng gốc trong PDF, và  Human Review ở bước cuối cùng.
 
 ### Self-check nộp phần 01
-- [ ] Có 5+ problems + top 3 Cards đủ field
-- [ ] Mỗi Card có workflow trước/sau + bottleneck + metric + fallback
-- [ ] Đã chọn 1 card pitch + câu hỏi challenge
+- [x] Có 5+ problems + top 3 Cards đủ field
+- [x] Mỗi Card có workflow trước/sau + bottleneck + metric + fallback
+- [x] Đã chọn 1 card pitch + câu hỏi challenge
